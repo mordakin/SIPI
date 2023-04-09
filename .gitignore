@@ -36,6 +36,10 @@ media
 .idea/**/gradle.xml
 .idea/**/libraries
 
+# sphinx build folder
+_build
+_static
+
 # File-based project format
 *.iws
 
