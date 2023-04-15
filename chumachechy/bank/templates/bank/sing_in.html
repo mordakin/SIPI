@@ -2,16 +2,15 @@
 
 {% block content %}
 <div class="container">
-<form>
-      <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Username</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-      </div>
-      <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">Password</label>
-        <input type="password" class="form-control" id="exampleInputPassword1">
-      </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+<form action="{% url 'sing_in' %}" method="post">
+    <div class="mb-3">
+    {% csrf_token %}
+        {% for f in form %}
+        <p><label class="form-label" for="{{ f.id_for_label }}">{{f.label}}</label>{{f}} </p>
+        <div class="form-error">{{f.errors}}</div>
+        {% endfor %}
+    <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
 </div>
 {% endblock %}

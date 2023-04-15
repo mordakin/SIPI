@@ -9,5 +9,6 @@ urlpatterns = [
     path('translation_history', translation_history, name='translation_history'),
     path('login', login, name='login'),
     path('sing_in', sing_in, name='sing_in'),
+    path('user_page', user_page, name='user_page'),
 
 ]
