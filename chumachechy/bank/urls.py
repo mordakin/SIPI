@@ -5,6 +5,8 @@ from .views import *
 urlpatterns = [
     path('', index, name='home'),
     path('accounts', AccountPage.as_view(), name='accounts'),
+    path('accounts_delete/<int:pk>/delete/',
+         AccountDelete.as_view(), name='accounts_delete'),
     path('transfer', transfer, name='transfer'),
     path('translation_history', translation_history, name='translation_history'),
     path('login', LoginPage.as_view(), name='login'),

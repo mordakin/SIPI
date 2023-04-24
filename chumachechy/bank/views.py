@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseNotFound
 from django.urls import reverse_lazy
 from .forms import *
-from django.views.generic import ListView, DetailView, CreateView, TemplateView
+from django.views.generic import ListView, DetailView, CreateView, TemplateView, DeleteView
 from django.contrib import messages
 
 
@@ -20,6 +20,7 @@ def index(request):
 #     """Страница счетов"""
 #     return render(request, 'bank/accounts.html', {'title': 'Счета'})
 class AccountPage(CreateView):
+    """Страница счетов(создание и отображение)"""
     model = BankAccount
     fields = []
     template_name = 'bank/accounts.html'
@@ -27,6 +28,7 @@ class AccountPage(CreateView):
     success_url = reverse_lazy('accounts')
 
     def form_valid(self, form):
+        """Генерация номера счёта"""
         random_number = str(random.randint(1000000000, 9999999999))
         username = self.request.user
         form.instance.account_number = random_number
@@ -34,9 +36,18 @@ class AccountPage(CreateView):
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
+        """Отображение счетов пользователя"""
         context = super().get_context_data(**kwargs)
-        context["object_list"] = self.model.objects.all()
+        context["object_list"] = self.model.objects.filter(
+            account_user_id=self.request.user)
         return context
+
+
+class AccountDelete(DeleteView):
+    """Страница счетов (удаление)"""
+    model = BankAccount
+    template_name = 'bank/accounts.html'
+    success_url = reverse_lazy('accounts')
 
 
 # class AccountListView(ListView):
@@ -76,25 +87,30 @@ def translation_history(request):
 
 
 class LoginPage(LoginView):
+    """Страница авторизации"""
     form_class = LoginUserForm
     template_name = 'bank/login.html'
     extra_context = {'title': 'Авторизация'}
 
     def get_success_url(self):
+        """Ссылка перехода"""
         return reverse_lazy('user_page')
 
     def form_invalid(self, form):
+        """Вывод при неверном пароле"""
         form.add_error(None, "Неверный логин или пароль")
         return super().form_invalid(form)
 
 
 class SingInPage(CreateView):
+    """Страница регистрации"""
     form_class = RegisterUserForm
     template_name = 'bank/sing_in.html'
     extra_context = {'title': 'Регистрация'}
     success_url = reverse_lazy('user_page')
 
     def form_valid(self, form):
+        """Внос данных в бд"""
         user = form.save()
         login(self.request, user)
         return redirect('user_page')
