@@ -1,25 +1,25 @@
 """Создание моделей(БД)"""
 from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
 from django.db import models
+from django.contrib.auth.models import User, AbstractUser
 
 
-class UserData(models.Model):
+class UserData(AbstractUser):
     """Данные пользователя"""
-    username = models.CharField(max_length=255)
+    username = models.CharField(max_length=255, unique=True)
     password = models.CharField(max_length=255)
-    phone_number = models.IntegerField(
-        validators=[MinValueValidator(80000000000), MaxValueValidator(89999999999), RegexValidator(
-            regex='8[\d]+')], unique=True)
+    phone_number = models.IntegerField(unique=True)
     passport = models.IntegerField(unique=True)
     fio = models.CharField(max_length=255, unique=True)
 
 
 class BankAccount(models.Model):
     """Данные о счёте"""
-    account_number = models.BigIntegerField(
+    account_number = models.IntegerField(
         unique=True, null=True)  # номер счёта
     amount_of_funds = models.IntegerField(default=0)  # средств на счету
-    account_user = models.ForeignKey('UserData', on_delete=models.PROTECT)
+    account_user = models.ForeignKey(
+        'UserData', on_delete=models.PROTECT, null=True)
 
 
 class Transfer(models.Model):
