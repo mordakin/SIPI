@@ -1,18 +1,31 @@
 {% extends 'bank/base.html' %}
 
 {% block content %}
+
+{% if messages %}
 <div class="container">
+                    <div class="alert alert-danger">
+                        {% for message in messages %}
+                        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+    </div>
+<div class="container">
+
         <h1>Список счетов</h1>
     <ul class="list-group">
+
         {% for a in object_list %}
 
-            <li class="list-group-item"> Номер счёта {{ a.account_number }} ---  Количество средств {{ a.amount_of_funds }}</li>
-         <form action="{% url 'accounts_delete' a.pk %}" method="post">
-            {% csrf_token %}
-            <input type="submit" class="btn btn-primary mb-3" value="Удалить счёт">
-        </form>
+        <li class="list-group-item"> Номер счёта {{ a.account_number }} ---  Количество средств {{ a.amount_of_funds }}</li>
+            <form action="{% url 'accounts_delete' a.pk %}" method="post">
+                {% csrf_token %}
+                <input type="submit" class="btn btn-primary mb-3" value="Удалить счёт">
+
+            </form>
         {% empty %}
-            <li>No accounts found.</li>
+            <li>Счетов пока нет(</li>
         {% endfor %}
     </ul>
     <form action="{% url 'accounts' %}" method="post">
@@ -20,4 +33,5 @@
         <input type="submit" class="btn btn-primary mb-3" value="Создать счёт">
     </form>
 </div>
+
 {% endblock %}

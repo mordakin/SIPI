@@ -4,7 +4,7 @@ import random
 from django.contrib.auth import logout, login
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.urls import reverse_lazy
 from .forms import *
 from django.views.generic import ListView, DetailView, CreateView, TemplateView, DeleteView
@@ -16,9 +16,6 @@ def index(request):
     return render(request, 'bank/index.html', {'title': 'Главная страница'})
 
 
-# def accounts(request):
-#     """Страница счетов"""
-#     return render(request, 'bank/accounts.html', {'title': 'Счета'})
 class AccountPage(CreateView):
     """Страница счетов(создание и отображение)"""
     model = BankAccount
@@ -48,6 +45,18 @@ class AccountDelete(DeleteView):
     model = BankAccount
     template_name = 'bank/accounts.html'
     success_url = reverse_lazy('accounts')
+
+    def form_valid(self, form):
+        """Проверка на наличие средств перед удалением"""
+        if self.object.amount_of_funds > 0:
+            messages.error(self.request,
+                           f'Не удалось удалить счет {self.object.account_number}, так как на нем есть деньги. '
+                           'Переведите деньги на другой счёт или снимите все деньги')
+            return redirect('accounts')
+        else:
+            messages.success(
+                self.request, f'Счет {self.object.account_number} успешно удален.')
+            return super().form_valid(form)
 
 
 # class AccountListView(ListView):
