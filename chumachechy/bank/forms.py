@@ -68,11 +68,22 @@ class LoginUserForm(AuthenticationForm):
         label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 
 
-# class BankAccountForm(forms.ModelForm):
-    #     account_number = forms.IntegerField(label='Номер счёта', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    #     amount_of_funds = forms.IntegerField(label='Количество средств',
-    #                                          widget=forms.TextInput(attrs={'class': 'form-control'}))
+class TransferForm(forms.ModelForm):
+    sender_name = forms.IntegerField(label='Счёт с которого хотите отправить деньги',
+                                     widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    recipient_name = forms.IntegerField(label='Счёт на который хотите отправить деньги',
+                                        widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    cost = forms.IntegerField(label='Сумма перевода',
+                              widget=forms.NumberInput(attrs={'class': 'form-control'}))
 
-    # class Meta:
-    #     model = BankAccount
-    #     fields = ['account_number', 'amount_of_funds']
+    class Meta:
+        model = Transfer
+        fields = ['sender_name', 'recipient_name', 'cost']
+# class BankAccountForm(forms.ModelForm):
+#     account_number = forms.IntegerField(label='Номер счёта', widget=forms.TextInput(attrs={'class': 'form-control'}))
+#     amount_of_funds = forms.IntegerField(label='Количество средств',
+#                                          widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+# class Meta:
+#     model = BankAccount
+#     fields = ['account_number', 'amount_of_funds']

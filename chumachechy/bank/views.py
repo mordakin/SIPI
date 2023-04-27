@@ -30,6 +30,7 @@ class AccountPage(CreateView):
         username = self.request.user
         form.instance.account_number = random_number
         form.instance.account_user = username
+        messages.success(self.request, f'Счет {random_number} успешно создан.')
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -59,40 +60,90 @@ class AccountDelete(DeleteView):
             return super().form_valid(form)
 
 
-# class AccountListView(ListView):
-#     model = BankAccount
-#     template_name = 'bank/accounts.html'
-#     context_object_name = 'object_list'
-#
-#     def get_queryset(self):
-#         a = BankAccount.objects.filter(account_user=self.request.user)
-#         print(a)
-#         return BankAccount.objects.filter(account_user=self.request.user)
+class TransferPage(CreateView):
+    """Страница переводов"""
+    form_class = TransferForm
+    template_name = 'bank/transfer.html'
+    extra_context = {'title': 'Переводы'}
+    success_url = reverse_lazy('transfer')
+
+    def form_valid(self, form):
+        """Проверка введённых данных"""
+        sender_name_field = form.cleaned_data[
+            'sender_name']  # берём значение из формы (счёт отправителя)
+        # берём значение из формы (счёт получателя)
+        recipient_name_field = form.cleaned_data['recipient_name']
+        # берём значение из формы (сумма перевода)
+        cost_field = form.cleaned_data['cost']
+        sender_account = BankAccount.objects.filter(account_user_id=self.request.user,
+                                                    account_number=sender_name_field)  # смотрим что есть такой счёт и у данного пользователя
+        recipient_account = BankAccount.objects.filter(
+            account_number=recipient_name_field)  # ищем счёт получателя
+        if sender_account and recipient_account and cost_field > 0:
+            recipient_amount = recipient_account.first(
+            ).amount_of_funds  # количество средств получателя
+            # количество средств отправителя
+            sender_amount = sender_account.first().amount_of_funds
+            if sender_amount - cost_field >= 0:
+                BankAccount.objects.filter(account_number=recipient_name_field).update(
+                    amount_of_funds=recipient_amount + cost_field)  # прибавляем к имющимся деньгам сумму перевода
+                BankAccount.objects.filter(account_number=sender_name_field).update(
+                    amount_of_funds=sender_amount - cost_field)  # отнимаем сумму перевода
+                messages.success(self.request, "Перевод успешно выполнен")
+                return super().form_valid(form)  # вызов оригинального метода form_valid
+            else:
+                messages.error(
+                    self.request, f"На счету {sender_name_field} недостаточно средств")
+                context = self.get_context_data(form=form)
+                return self.render_to_response(context)
+        elif not sender_account:
+            messages.error(
+                self.request, f"У вас нет счёта {sender_name_field}")
+            context = self.get_context_data(form=form)
+            return self.render_to_response(context)
+        elif not recipient_account:
+            messages.error(
+                self.request, f"Нет получателя с номером счёта {recipient_name_field}")
+            context = self.get_context_data(form=form)
+            return self.render_to_response(context)
+        else:
+            messages.error(self.request, "Сумма должна быть положительной!")
+            context = self.get_context_data(form=form)
+            return self.render_to_response(context)
 
 
-# def form_valid(self, form):
-#     username = self.request.user
-#     save_id_account = form.save()
-#     print(save_id_account)
-#     id_user = UserData.objects.filter(username=username)
-#     print(id_user[0])
-#     b = BankAccount.objects.filter(pk=getattr(save_id_account, 'id')).update(account_user=id_user[0])
-#     # b = BankAccount.objects.update(account_user=id_user[0])
-#
-#     # self.request.session['account_user_id'] = str(user)
-#     print(b)
-#     # form.save()
-#     return redirect('user_page')
-
-
-def transfer(request):
-    """Страницы переводов"""
-    return render(request, 'bank/transfer.html', {'title': 'Переводы'})
-
-
-def translation_history(request):
+class TranslationHistoryPage(CreateView):
     """Страница истории переводов"""
-    return render(request, 'bank/translation_history.html', {'title': 'История переводов'})
+    model = Transfer
+    fields = []
+    template_name = 'bank/translation_history.html'
+    extra_context = {'title': 'История переводов'}
+    success_url = reverse_lazy('transfer')
+    context_object_name = ['transfer']
+    #
+    # def get_context_data(self, **kwargs):
+    #     """Отображение переводов"""
+    #     context = super().get_context_data(**kwargs)
+    #     a = BankAccount.objects.filter(account_user=self.request.user).values_list('account_number', flat=True)
+    #     b = Transfer.objects.values_list('sender_name', 'recipient_name')
+    #     for i in a:
+    #         for j in b:
+    #             for k in j:
+    #                 if i == k:
+    #                     print(i)
+    #
+    #     context["transfer"] = a
+    #     # sender_account = BankAccount.objects.filter(account_user_id=self.request.user,
+    #     #                                             account_number=sender_name_field)  # смотрим что есть такой счёт и у данного пользователя
+    #     # recipient_account = BankAccount.objects.filter(account_number=recipient_name_field)  # ищем счёт получателя
+    #     # context["object_list"] = self.model.objects.filter(
+    #     #     account_user_id=self.request.user)
+    #     return context
+
+
+# def translation_history(request):
+#     """Страница истории переводов"""
+#     return render(request, 'bank/translation_history.html', {'title': 'История переводов'})
 
 
 class LoginPage(LoginView):
@@ -127,7 +178,6 @@ class SingInPage(CreateView):
 
 def user_page(request):
     """Страница пользователя"""
-
     return render(request, 'bank/user_page.html', {'title': 'Мой аккаунт'})
 
 

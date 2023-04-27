@@ -26,4 +26,4 @@ class Transfer(models.Model):
     """Данные о переводах"""
     sender_name = models.BigIntegerField()  # счёт отправителя
     recipient_name = models.BigIntegerField()  # счёт получателя
-    cost = models.IntegerField  # сумма перевода
+    cost = models.IntegerField(default=0)  # сумма перевода
