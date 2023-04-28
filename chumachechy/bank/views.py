@@ -3,6 +3,7 @@ import random
 
 from django.contrib.auth import logout, login
 from django.contrib.auth.views import LoginView
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.urls import reverse_lazy
@@ -119,31 +120,15 @@ class TranslationHistoryPage(CreateView):
     template_name = 'bank/translation_history.html'
     extra_context = {'title': 'История переводов'}
     success_url = reverse_lazy('transfer')
-    context_object_name = ['transfer']
-    #
-    # def get_context_data(self, **kwargs):
-    #     """Отображение переводов"""
-    #     context = super().get_context_data(**kwargs)
-    #     a = BankAccount.objects.filter(account_user=self.request.user).values_list('account_number', flat=True)
-    #     b = Transfer.objects.values_list('sender_name', 'recipient_name')
-    #     for i in a:
-    #         for j in b:
-    #             for k in j:
-    #                 if i == k:
-    #                     print(i)
-    #
-    #     context["transfer"] = a
-    #     # sender_account = BankAccount.objects.filter(account_user_id=self.request.user,
-    #     #                                             account_number=sender_name_field)  # смотрим что есть такой счёт и у данного пользователя
-    #     # recipient_account = BankAccount.objects.filter(account_number=recipient_name_field)  # ищем счёт получателя
-    #     # context["object_list"] = self.model.objects.filter(
-    #     #     account_user_id=self.request.user)
-    #     return context
 
-
-# def translation_history(request):
-#     """Страница истории переводов"""
-#     return render(request, 'bank/translation_history.html', {'title': 'История переводов'})
+    def get_context_data(self, **kwargs):
+        """Отображение переводов"""
+        context = super().get_context_data(**kwargs)
+        take_account_user = BankAccount.objects.filter(account_user=self.request.user).values_list('account_number',
+                                                                                                   flat=True)
+        context["transfer1"] = Transfer.objects.filter(
+            Q(sender_name__in=take_account_user) | Q(recipient_name__in=take_account_user))
+        return context
 
 
 class LoginPage(LoginView):

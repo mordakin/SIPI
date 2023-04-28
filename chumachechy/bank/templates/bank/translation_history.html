@@ -16,9 +16,9 @@
     <h1>Список переводов</h1>
     <ul class="list-group">
 
-        {% for a in transfer %}
+        {% for a in transfer1 %}
 
-        <li class="list-group-item"> Счёт с которого перевели {{ a.account_number }} --- Счёт на который перевели средств
+        <li class="list-group-item"> Счёт с которого перевели {{ a.sender_name }} --- Счёт на который перевели средств
             {{ a.recipient_name }} --- Сумма перевода {{ a.cost }}
         </li>
         {% empty %}
