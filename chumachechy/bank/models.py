@@ -21,6 +21,9 @@ class BankAccount(models.Model):
     account_user = models.ForeignKey(
         'UserData', on_delete=models.PROTECT, null=True)
 
+    def __str__(self):
+        return str(self.account_number)
+
 
 class Transfer(models.Model):
     """Данные о переводах"""

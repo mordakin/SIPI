@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+
+  django:
+    hostname: online_bank
+    build:
+      context: ./
+      dockerfile: Dockerfile.bank
+    restart: unless-stopped
+    command: bash -rc "python3 manage.py runserver 0.0.0.0:8000"
+    healthcheck:
+      test: curl -sS http://0.0.0.0:8000 || echo 1
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  nginx:
+    build:
+      context: ./
+      dockerfile: nginx/Dockerfile.nginx
+    restart: unless-stopped
+    ports:
+      - '8080:8080'
+    depends_on:
+      django:
+        condition: service_healthy

@@ -68,6 +68,12 @@ class TransferPage(CreateView):
     extra_context = {'title': 'Переводы'}
     success_url = reverse_lazy('transfer')
 
+    def get_form_kwargs(self):
+        """Добавляем дополнительный аргумент user в словарь kwargs """
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
     def form_valid(self, form):
         """Проверка введённых данных"""
         sender_name_field = form.cleaned_data[

@@ -12,8 +12,8 @@ class RegisterUserForm(UserCreationForm):
     username = forms.CharField(max_length=255, label='Имя пользователя',
                                widget=forms.TextInput(attrs={'class': 'form-control'}))
     phone_number = forms.IntegerField(
-        label='Номер телефона', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    passport = forms.IntegerField(label='Серия и номер пасспорта', widget=forms.TextInput(
+        label='Номер телефона', widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    passport = forms.IntegerField(label='Серия и номер паспорта', widget=forms.NumberInput(
         attrs={'class': 'form-control'}))
     fio = forms.CharField(label='ФИО', max_length=255, widget=forms.TextInput(
         attrs={'class': 'form-control'}))
@@ -69,14 +69,25 @@ class LoginUserForm(AuthenticationForm):
 
 
 class TransferForm(forms.ModelForm):
-    sender_name = forms.IntegerField(label='Счёт с которого хотите отправить деньги',
-                                     widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    """Класс для формы переводов"""
+    sender_name = forms.ModelChoiceField(queryset=BankAccount.objects.none(),
+                                         label='Счёт с которого хотите отправить деньги',
+                                         widget=forms.Select(attrs={'class': 'form-control'}))
     recipient_name = forms.IntegerField(label='Счёт на который хотите отправить деньги',
                                         widget=forms.NumberInput(attrs={'class': 'form-control'}))
     cost = forms.IntegerField(label='Сумма перевода',
                               widget=forms.NumberInput(attrs={'class': 'form-control'}))
 
+    def __init__(self, *args, **kwargs):
+        """Переопределение для доп функционала"""
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        if user:
+            self.fields['sender_name'].queryset = BankAccount.objects.filter(
+                account_user=user)
+
     class Meta:
+        """Класс наследования от модели"""
         model = Transfer
         fields = ['sender_name', 'recipient_name', 'cost']
 # class BankAccountForm(forms.ModelForm):
