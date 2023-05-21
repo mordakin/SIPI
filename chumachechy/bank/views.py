@@ -167,6 +167,24 @@ class SingInPage(CreateView):
         return redirect('user_page')
 
 
+class AccountActions(CreateView):
+    form_class = AddedForm
+    template_name = 'bank/add_lost.html'
+    extra_context = {'title': 'Пополнение/снятие'}
+    success_url = reverse_lazy('user_page')
+
+    def get_form_kwargs(self):
+        """Добавляем дополнительный аргумент user в словарь kwargs """
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def form_valid(self, form):
+        account = form.cleaned_data['sender_name']
+        cost = form.cleaned_data['cost']
+        return super().form_invalid(form)
+
+
 def user_page(request):
     """Страница пользователя"""
     return render(request, 'bank/user_page.html', {'title': 'Мой аккаунт'})

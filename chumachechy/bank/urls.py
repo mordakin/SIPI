@@ -12,6 +12,7 @@ urlpatterns = [
          name='translation_history'),
     path('login', LoginPage.as_view(), name='login'),
     path('sing_in', SingInPage.as_view(), name='sing_in'),
+    path('add_lost', AccountActions.as_view(), name='add_lost'),
     path('user_page', user_page, name='user_page'),
     path('logout', logout_user, name='logout'),
 

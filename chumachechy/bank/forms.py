@@ -70,12 +70,37 @@ class LoginUserForm(AuthenticationForm):
 
 class TransferForm(forms.ModelForm):
     """Класс для формы переводов"""
-    sender_name = forms.ModelChoiceField(queryset=BankAccount.objects.none(),
-                                         label='Счёт с которого хотите отправить деньги',
-                                         widget=forms.Select(attrs={'class': 'form-control'}))
+    sender_name = forms.ChoiceField(label='Счёт с которого хотите отправить деньги',
+                                    widget=forms.Select(attrs={'class': 'form-control'}))
     recipient_name = forms.IntegerField(label='Счёт на который хотите отправить деньги',
                                         widget=forms.NumberInput(attrs={'class': 'form-control'}))
     cost = forms.IntegerField(label='Сумма перевода',
+                              widget=forms.NumberInput(attrs={'class': 'form-control'}))
+
+    def __init__(self, *args, **kwargs):
+        """Переопределение для доп функционала"""
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        if user:
+            sender_name = BankAccount.objects.filter(
+                account_user=user).values_list('account_number', flat=True)
+            # Создаем список выбора из номеров счетов
+            choices = [(number, number) for number in sender_name]
+            # Присваиваем список выбора полю account_number
+            self.fields['sender_name'].choices = choices
+
+    class Meta:
+        """Класс наследования от модели"""
+        model = Transfer
+        fields = ['sender_name', 'recipient_name', 'cost']
+
+
+class AddedForm(forms.ModelForm):
+    """Класс для формы пополнения и снятия"""
+    sender_name = forms.ModelChoiceField(queryset=BankAccount.objects.none(),
+                                         label='Счёт с которого хотите отправить деньги',
+                                         widget=forms.Select(attrs={'class': 'form-control'}))
+    cost = forms.IntegerField(label='Сумма',
                               widget=forms.NumberInput(attrs={'class': 'form-control'}))
 
     def __init__(self, *args, **kwargs):
@@ -89,7 +114,7 @@ class TransferForm(forms.ModelForm):
     class Meta:
         """Класс наследования от модели"""
         model = Transfer
-        fields = ['sender_name', 'recipient_name', 'cost']
+        fields = ['sender_name', 'cost']
 # class BankAccountForm(forms.ModelForm):
 #     account_number = forms.IntegerField(label='Номер счёта', widget=forms.TextInput(attrs={'class': 'form-control'}))
 #     amount_of_funds = forms.IntegerField(label='Количество средств',

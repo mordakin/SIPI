@@ -27,6 +27,6 @@ class BankAccount(models.Model):
 
 class Transfer(models.Model):
     """Данные о переводах"""
-    sender_name = models.BigIntegerField()  # счёт отправителя
-    recipient_name = models.BigIntegerField()  # счёт получателя
+    sender_name = models.IntegerField()  # счёт отправителя
+    recipient_name = models.IntegerField()  # счёт получателя
     cost = models.IntegerField(default=0)  # сумма перевода
