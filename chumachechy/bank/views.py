@@ -7,8 +7,10 @@ from django.db.models import Q, F
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.urls import reverse_lazy
+from django.views import View
+
 from .forms import *
-from django.views.generic import ListView, DetailView, CreateView, TemplateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, TemplateView, DeleteView, UpdateView
 from django.contrib import messages
 
 
@@ -147,9 +149,19 @@ class LoginPage(LoginView):
         """Ссылка перехода"""
         return reverse_lazy('user_page')
 
+    def form_valid(self, form):
+        """Проверка не заблокирован ли пользователь"""
+        username = form.cleaned_data['username']
+        user = UserData.objects.get(username=username)
+
+        if user.block:
+            messages.error(self.request, "Ваш аккаунт заблокирован")
+            return self.form_invalid(form)
+
+        return super().form_valid(form)
+
     def form_invalid(self, form):
         """Вывод при неверном пароле"""
-        form.add_error(None, "Неверный логин или пароль")
         return super().form_invalid(form)
 
 
@@ -168,6 +180,7 @@ class SingInPage(CreateView):
 
 
 class AccountAddCost(CreateView):
+    """Страница пополнения"""
     form_class = AddedForm
     template_name = 'bank/add.html'
     extra_context = {'title': 'Пополнение'}
@@ -180,6 +193,7 @@ class AccountAddCost(CreateView):
         return kwargs
 
     def form_valid(self, form):
+        """Пополнение"""
         sender_name = form.cleaned_data['sender_name']
         cost = form.cleaned_data['cost']
         if cost < 0:
@@ -188,12 +202,12 @@ class AccountAddCost(CreateView):
             return self.render_to_response(context)
         else:
             BankAccount.objects.filter(account_number=sender_name).update(
-                amount_of_funds=F('amount_of_funds') + cost
-            )
+                amount_of_funds=F('amount_of_funds') + cost)
             return super().form_invalid(form)
 
 
 class AccountLostCost(CreateView):
+    """Страница снятия"""
     form_class = AddedForm
     template_name = 'bank/lost.html'
     extra_context = {'title': 'Снятие'}
@@ -206,10 +220,9 @@ class AccountLostCost(CreateView):
         return kwargs
 
     def form_valid(self, form):
+        """Снятие"""
         sender_name = form.cleaned_data['sender_name']
         cost = form.cleaned_data['cost']
-        a = BankAccount.objects.get(account_number=sender_name).amount_of_funds
-        print(a)
         if cost < 0:
             messages.error(self.request, "Сумма должна быть положительной!")
             context = self.get_context_data(form=form)
@@ -225,9 +238,22 @@ class AccountLostCost(CreateView):
             return super().form_invalid(form)
 
 
-def user_page(request):
-    """Страница пользователя"""
-    return render(request, 'bank/user_page.html', {'title': 'Мой аккаунт'})
+class BlockUser(View):
+    """Страница блокировки аккаунта"""
+    template_name = 'bank/user_page.html'
+    extra_context = {'title': 'Главная страница'}
+    success_url = reverse_lazy('logout')
+
+    def get(self, request, *args, **kwargs):
+        """Переопределеие гет запроса"""
+        return render(request, self.template_name, self.extra_context)
+
+    def post(self, request, *args, **kwargs):
+        """Переопределеие пост запроса"""
+        user = request.user
+        user.block = True  # Измените значение поля block на True (1)
+        user.save()  # Сохраните изменения в базе данных
+        return redirect(self.success_url)
 
 
 def pageNotFound(request, exception):

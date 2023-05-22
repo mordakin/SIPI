@@ -14,7 +14,7 @@ urlpatterns = [
     path('sing_in', SingInPage.as_view(), name='sing_in'),
     path('add', AccountAddCost.as_view(), name='add'),
     path('lost', AccountLostCost.as_view(), name='lost'),
-    path('user_page', user_page, name='user_page'),
+    path('user_page', BlockUser.as_view(), name='user_page'),
     path('logout', logout_user, name='logout'),
 
 ]

@@ -11,6 +11,7 @@ class UserData(AbstractUser):
     phone_number = models.IntegerField(unique=True)
     passport = models.IntegerField(unique=True)
     fio = models.CharField(max_length=255, unique=True)
+    block = models.BooleanField(default=0)
 
 
 class BankAccount(models.Model):

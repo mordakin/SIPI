@@ -2,6 +2,21 @@
 
 {% block content %}
 <div class="container">
-User page
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-danger{% endif %}">
+      {{ message }}
+    </div>
+  {% endfor %}
+{% endif %}
+</div>
+
+<div class="container">
+<form action="{% url 'user_page' %}" method="post">
+    <div class="mb-3">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary">Заблокировать аккаунт</button>
+    </div>
+</form>
 </div>
 {% endblock %}
