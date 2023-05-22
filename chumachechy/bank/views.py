@@ -3,7 +3,7 @@ import random
 
 from django.contrib.auth import logout, login
 from django.contrib.auth.views import LoginView
-from django.db.models import Q
+from django.db.models import Q, F
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.urls import reverse_lazy
@@ -167,10 +167,10 @@ class SingInPage(CreateView):
         return redirect('user_page')
 
 
-class AccountActions(CreateView):
+class AccountAddCost(CreateView):
     form_class = AddedForm
-    template_name = 'bank/add_lost.html'
-    extra_context = {'title': 'Пополнение/снятие'}
+    template_name = 'bank/add.html'
+    extra_context = {'title': 'Пополнение'}
     success_url = reverse_lazy('user_page')
 
     def get_form_kwargs(self):
@@ -180,9 +180,49 @@ class AccountActions(CreateView):
         return kwargs
 
     def form_valid(self, form):
-        account = form.cleaned_data['sender_name']
+        sender_name = form.cleaned_data['sender_name']
         cost = form.cleaned_data['cost']
-        return super().form_invalid(form)
+        if cost < 0:
+            messages.error(self.request, "Сумма должна быть положительной!")
+            context = self.get_context_data(form=form)
+            return self.render_to_response(context)
+        else:
+            BankAccount.objects.filter(account_number=sender_name).update(
+                amount_of_funds=F('amount_of_funds') + cost
+            )
+            return super().form_invalid(form)
+
+
+class AccountLostCost(CreateView):
+    form_class = AddedForm
+    template_name = 'bank/lost.html'
+    extra_context = {'title': 'Снятие'}
+    success_url = reverse_lazy('user_page')
+
+    def get_form_kwargs(self):
+        """Добавляем дополнительный аргумент user в словарь kwargs """
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def form_valid(self, form):
+        sender_name = form.cleaned_data['sender_name']
+        cost = form.cleaned_data['cost']
+        a = BankAccount.objects.get(account_number=sender_name).amount_of_funds
+        print(a)
+        if cost < 0:
+            messages.error(self.request, "Сумма должна быть положительной!")
+            context = self.get_context_data(form=form)
+            return self.render_to_response(context)
+        elif BankAccount.objects.get(account_number=sender_name).amount_of_funds - cost < 0:
+            messages.error(self.request, "У вас нет столько денег")
+            context = self.get_context_data(form=form)
+            return self.render_to_response(context)
+        else:
+            BankAccount.objects.filter(account_number=sender_name).update(
+                amount_of_funds=F('amount_of_funds') - cost
+            )
+            return super().form_invalid(form)
 
 
 def user_page(request):

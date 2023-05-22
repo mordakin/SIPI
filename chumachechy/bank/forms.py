@@ -97,9 +97,8 @@ class TransferForm(forms.ModelForm):
 
 class AddedForm(forms.ModelForm):
     """Класс для формы пополнения и снятия"""
-    sender_name = forms.ModelChoiceField(queryset=BankAccount.objects.none(),
-                                         label='Счёт с которого хотите отправить деньги',
-                                         widget=forms.Select(attrs={'class': 'form-control'}))
+    sender_name = forms.ChoiceField(label='Счёт с которого хотите отправить деньги',
+                                    widget=forms.Select(attrs={'class': 'form-control'}))
     cost = forms.IntegerField(label='Сумма',
                               widget=forms.NumberInput(attrs={'class': 'form-control'}))
 
@@ -108,8 +107,12 @@ class AddedForm(forms.ModelForm):
         user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
         if user:
-            self.fields['sender_name'].queryset = BankAccount.objects.filter(
-                account_user=user)
+            sender_name = BankAccount.objects.filter(
+                account_user=user).values_list('account_number', flat=True)
+            # Создаем список выбора из номеров счетов
+            choices = [(number, number) for number in sender_name]
+            # Присваиваем список выбора полю account_number
+            self.fields['sender_name'].choices = choices
 
     class Meta:
         """Класс наследования от модели"""
