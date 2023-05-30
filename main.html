@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="ru" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Онлайн Банк &mdash; документация Online Bank 0.0.2</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/translations.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+    <link rel="next" title="bank.migrations package" href="bank.migrations.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Online Bank
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Поиск в документации" aria-label="Поиск в документации" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
+              <p class="caption" role="heading"><span class="caption-text">Содержание:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Онлайн Банк</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#bank-package">bank package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bank.migrations.html">bank.migrations package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-bank.admin">bank.admin module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-bank.apps">bank.apps module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#bank.apps.BankConfig"><code class="docutils literal notranslate"><span class="pre">BankConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#bank.apps.BankConfig.default_auto_field"><code class="docutils literal notranslate"><span class="pre">BankConfig.default_auto_field</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.apps.BankConfig.name"><code class="docutils literal notranslate"><span class="pre">BankConfig.name</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-bank.models">bank.models module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#bank.models.BankAccount"><code class="docutils literal notranslate"><span class="pre">BankAccount</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#bank.models.BankAccount.account_user"><code class="docutils literal notranslate"><span class="pre">BankAccount.account_user</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#bank.models.Transfer"><code class="docutils literal notranslate"><span class="pre">Transfer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bank.models.UserData"><code class="docutils literal notranslate"><span class="pre">UserData</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-bank.tests">bank.tests module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bank-urls-module">bank.urls module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-bank.views">bank.views module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#bank.views.AccountAddCost"><code class="docutils literal notranslate"><span class="pre">AccountAddCost</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.AccountAddCost.extra_context"><code class="docutils literal notranslate"><span class="pre">AccountAddCost.extra_context</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.AccountAddCost.form_class"><code class="docutils literal notranslate"><span class="pre">AccountAddCost.form_class</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.AccountAddCost.form_valid"><code class="docutils literal notranslate"><span class="pre">AccountAddCost.form_valid()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.AccountAddCost.get_form_kwargs"><code class="docutils literal notranslate"><span class="pre">AccountAddCost.get_form_kwargs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.AccountAddCost.success_url"><code class="docutils literal notranslate"><span class="pre">AccountAddCost.success_url</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.AccountAddCost.template_name"><code class="docutils literal notranslate"><span class="pre">AccountAddCost.template_name</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#bank.views.AccountDelete"><code class="docutils literal notranslate"><span class="pre">AccountDelete</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.AccountDelete.form_valid"><code class="docutils literal notranslate"><span class="pre">AccountDelete.form_valid()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.AccountDelete.model"><code class="docutils literal notranslate"><span class="pre">AccountDelete.model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.AccountDelete.success_url"><code class="docutils literal notranslate"><span class="pre">AccountDelete.success_url</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.AccountDelete.template_name"><code class="docutils literal notranslate"><span class="pre">AccountDelete.template_name</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#bank.views.AccountLostCost"><code class="docutils literal notranslate"><span class="pre">AccountLostCost</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.AccountLostCost.extra_context"><code class="docutils literal notranslate"><span class="pre">AccountLostCost.extra_context</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.AccountLostCost.form_class"><code class="docutils literal notranslate"><span class="pre">AccountLostCost.form_class</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.AccountLostCost.form_valid"><code class="docutils literal notranslate"><span class="pre">AccountLostCost.form_valid()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.AccountLostCost.get_form_kwargs"><code class="docutils literal notranslate"><span class="pre">AccountLostCost.get_form_kwargs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.AccountLostCost.success_url"><code class="docutils literal notranslate"><span class="pre">AccountLostCost.success_url</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.AccountLostCost.template_name"><code class="docutils literal notranslate"><span class="pre">AccountLostCost.template_name</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#bank.views.AccountPage"><code class="docutils literal notranslate"><span class="pre">AccountPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.AccountPage.extra_context"><code class="docutils literal notranslate"><span class="pre">AccountPage.extra_context</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.AccountPage.fields"><code class="docutils literal notranslate"><span class="pre">AccountPage.fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.AccountPage.form_valid"><code class="docutils literal notranslate"><span class="pre">AccountPage.form_valid()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.AccountPage.get_context_data"><code class="docutils literal notranslate"><span class="pre">AccountPage.get_context_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.AccountPage.model"><code class="docutils literal notranslate"><span class="pre">AccountPage.model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.AccountPage.success_url"><code class="docutils literal notranslate"><span class="pre">AccountPage.success_url</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.AccountPage.template_name"><code class="docutils literal notranslate"><span class="pre">AccountPage.template_name</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#bank.views.BlockUser"><code class="docutils literal notranslate"><span class="pre">BlockUser</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.BlockUser.extra_context"><code class="docutils literal notranslate"><span class="pre">BlockUser.extra_context</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.BlockUser.get"><code class="docutils literal notranslate"><span class="pre">BlockUser.get()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.BlockUser.post"><code class="docutils literal notranslate"><span class="pre">BlockUser.post()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.BlockUser.success_url"><code class="docutils literal notranslate"><span class="pre">BlockUser.success_url</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.BlockUser.template_name"><code class="docutils literal notranslate"><span class="pre">BlockUser.template_name</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#bank.views.LoginPage"><code class="docutils literal notranslate"><span class="pre">LoginPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.LoginPage.extra_context"><code class="docutils literal notranslate"><span class="pre">LoginPage.extra_context</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.LoginPage.form_class"><code class="docutils literal notranslate"><span class="pre">LoginPage.form_class</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.LoginPage.form_invalid"><code class="docutils literal notranslate"><span class="pre">LoginPage.form_invalid()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.LoginPage.form_valid"><code class="docutils literal notranslate"><span class="pre">LoginPage.form_valid()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.LoginPage.get_success_url"><code class="docutils literal notranslate"><span class="pre">LoginPage.get_success_url()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.LoginPage.template_name"><code class="docutils literal notranslate"><span class="pre">LoginPage.template_name</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#bank.views.SingInPage"><code class="docutils literal notranslate"><span class="pre">SingInPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.SingInPage.extra_context"><code class="docutils literal notranslate"><span class="pre">SingInPage.extra_context</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.SingInPage.form_class"><code class="docutils literal notranslate"><span class="pre">SingInPage.form_class</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.SingInPage.form_valid"><code class="docutils literal notranslate"><span class="pre">SingInPage.form_valid()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.SingInPage.success_url"><code class="docutils literal notranslate"><span class="pre">SingInPage.success_url</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.SingInPage.template_name"><code class="docutils literal notranslate"><span class="pre">SingInPage.template_name</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#bank.views.TransferPage"><code class="docutils literal notranslate"><span class="pre">TransferPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.TransferPage.extra_context"><code class="docutils literal notranslate"><span class="pre">TransferPage.extra_context</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.TransferPage.form_class"><code class="docutils literal notranslate"><span class="pre">TransferPage.form_class</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.TransferPage.form_valid"><code class="docutils literal notranslate"><span class="pre">TransferPage.form_valid()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.TransferPage.get_form_kwargs"><code class="docutils literal notranslate"><span class="pre">TransferPage.get_form_kwargs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.TransferPage.success_url"><code class="docutils literal notranslate"><span class="pre">TransferPage.success_url</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.TransferPage.template_name"><code class="docutils literal notranslate"><span class="pre">TransferPage.template_name</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#bank.views.TranslationHistoryPage"><code class="docutils literal notranslate"><span class="pre">TranslationHistoryPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.TranslationHistoryPage.extra_context"><code class="docutils literal notranslate"><span class="pre">TranslationHistoryPage.extra_context</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.TranslationHistoryPage.fields"><code class="docutils literal notranslate"><span class="pre">TranslationHistoryPage.fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.TranslationHistoryPage.get_context_data"><code class="docutils literal notranslate"><span class="pre">TranslationHistoryPage.get_context_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.TranslationHistoryPage.model"><code class="docutils literal notranslate"><span class="pre">TranslationHistoryPage.model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.TranslationHistoryPage.success_url"><code class="docutils literal notranslate"><span class="pre">TranslationHistoryPage.success_url</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bank.views.TranslationHistoryPage.template_name"><code class="docutils literal notranslate"><span class="pre">TranslationHistoryPage.template_name</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#bank.views.index"><code class="docutils literal notranslate"><span class="pre">index()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bank.views.logout_user"><code class="docutils literal notranslate"><span class="pre">logout_user()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bank.views.pageNotFound"><code class="docutils literal notranslate"><span class="pre">pageNotFound()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-bank">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Online Bank</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Навигация по страницам">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Онлайн Банк</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/main.rst.txt" rel="nofollow"> Просмотреть исходный код страницы</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>Онлайн Банк<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h1>
+<p>Автоматически сгенерированная документация</p>
+<p>Ссылка на <a class="reference external" href="https://github.com/mordakin/SIPI">GitHub</a></p>
+</section>
+<section id="bank-package">
+<h1>bank package<a class="headerlink" href="#bank-package" title="Permalink to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="bank.migrations.html">bank.migrations package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bank.migrations.html#module-bank.migrations">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-bank.admin">
+<span id="bank-admin-module"></span><h2>bank.admin module<a class="headerlink" href="#module-bank.admin" title="Permalink to this heading"></a></h2>
+<p>Админка</p>
+</section>
+<section id="module-bank.apps">
+<span id="bank-apps-module"></span><h2>bank.apps module<a class="headerlink" href="#module-bank.apps" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="bank.apps.BankConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bank.apps.</span></span><span class="sig-name descname"><span class="pre">BankConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bank.apps.BankConfig" title="Ссылка на это определение"></a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">AppConfig</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bank.apps.BankConfig.default_auto_field">
+<span class="sig-name descname"><span class="pre">default_auto_field</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'django.db.models.BigAutoField'</span></em><a class="headerlink" href="#bank.apps.BankConfig.default_auto_field" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bank.apps.BankConfig.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bank'</span></em><a class="headerlink" href="#bank.apps.BankConfig.name" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-bank.models">
+<span id="bank-models-module"></span><h2>bank.models module<a class="headerlink" href="#module-bank.models" title="Permalink to this heading"></a></h2>
+<p>Создание моделей(БД)</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="bank.models.BankAccount">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bank.models.</span></span><span class="sig-name descname"><span class="pre">BankAccount</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bank.models.BankAccount" title="Ссылка на это определение"></a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
+<p>Данные о счёте</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bank.models.BankAccount.account_user">
+<span class="sig-name descname"><span class="pre">account_user</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'UserData'</span></em><a class="headerlink" href="#bank.models.BankAccount.account_user" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="bank.models.Transfer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bank.models.</span></span><span class="sig-name descname"><span class="pre">Transfer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bank.models.Transfer" title="Ссылка на это определение"></a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
+<p>Данные о переводах</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="bank.models.UserData">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bank.models.</span></span><span class="sig-name descname"><span class="pre">UserData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bank.models.UserData" title="Ссылка на это определение"></a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractUser</span></code></p>
+<p>Данные пользователя</p>
+</dd></dl>
+
+</section>
+<section id="module-bank.tests">
+<span id="bank-tests-module"></span><h2>bank.tests module<a class="headerlink" href="#module-bank.tests" title="Permalink to this heading"></a></h2>
+</section>
+<section id="bank-urls-module">
+<h2>bank.urls module<a class="headerlink" href="#bank-urls-module" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-bank.views">
+<span id="bank-views-module"></span><h2>bank.views module<a class="headerlink" href="#module-bank.views" title="Permalink to this heading"></a></h2>
+<p>Create pages</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="bank.views.AccountAddCost">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bank.views.</span></span><span class="sig-name descname"><span class="pre">AccountAddCost</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bank.views.AccountAddCost" title="Ссылка на это определение"></a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">CreateView</span></code></p>
+<p>Страница пополнения</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bank.views.AccountAddCost.extra_context">
+<span class="sig-name descname"><span class="pre">extra_context</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'title':</span> <span class="pre">'Пополнение'}</span></em><a class="headerlink" href="#bank.views.AccountAddCost.extra_context" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bank.views.AccountAddCost.form_class">
+<span class="sig-name descname"><span class="pre">form_class</span></span><a class="headerlink" href="#bank.views.AccountAddCost.form_class" title="Ссылка на это определение"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">AddedForm</span></code></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bank.views.AccountAddCost.form_valid">
+<span class="sig-name descname"><span class="pre">form_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">form</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bank.views.AccountAddCost.form_valid" title="Ссылка на это определение"></a></dt>
+<dd><p>Пополнение</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bank.views.AccountAddCost.get_form_kwargs">
+<span class="sig-name descname"><span class="pre">get_form_kwargs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bank.views.AccountAddCost.get_form_kwargs" title="Ссылка на это определение"></a></dt>
+<dd><p>Добавляем дополнительный аргумент user в словарь kwargs</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bank.views.AccountAddCost.success_url">
+<span class="sig-name descname"><span class="pre">success_url</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'add'</span></em><a class="headerlink" href="#bank.views.AccountAddCost.success_url" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bank.views.AccountAddCost.template_name">
+<span class="sig-name descname"><span class="pre">template_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bank/add.html'</span></em><a class="headerlink" href="#bank.views.AccountAddCost.template_name" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="bank.views.AccountDelete">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bank.views.</span></span><span class="sig-name descname"><span class="pre">AccountDelete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bank.views.AccountDelete" title="Ссылка на это определение"></a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">DeleteView</span></code></p>
+<p>Страница счетов (удаление)</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="bank.views.AccountDelete.form_valid">
+<span class="sig-name descname"><span class="pre">form_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">form</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bank.views.AccountDelete.form_valid" title="Ссылка на это определение"></a></dt>
+<dd><p>Проверка на наличие средств перед удалением</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bank.views.AccountDelete.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#bank.views.AccountDelete.model" title="Ссылка на это определение"></a></dt>
+<dd><p>alias of <a class="reference internal" href="#bank.models.BankAccount" title="bank.models.BankAccount"><code class="xref py py-class docutils literal notranslate"><span class="pre">BankAccount</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bank.views.AccountDelete.success_url">
+<span class="sig-name descname"><span class="pre">success_url</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'accounts'</span></em><a class="headerlink" href="#bank.views.AccountDelete.success_url" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bank.views.AccountDelete.template_name">
+<span class="sig-name descname"><span class="pre">template_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bank/accounts.html'</span></em><a class="headerlink" href="#bank.views.AccountDelete.template_name" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="bank.views.AccountLostCost">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bank.views.</span></span><span class="sig-name descname"><span class="pre">AccountLostCost</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bank.views.AccountLostCost" title="Ссылка на это определение"></a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">CreateView</span></code></p>
+<p>Страница снятия</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bank.views.AccountLostCost.extra_context">
+<span class="sig-name descname"><span class="pre">extra_context</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'title':</span> <span class="pre">'Снятие'}</span></em><a class="headerlink" href="#bank.views.AccountLostCost.extra_context" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bank.views.AccountLostCost.form_class">
+<span class="sig-name descname"><span class="pre">form_class</span></span><a class="headerlink" href="#bank.views.AccountLostCost.form_class" title="Ссылка на это определение"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">AddedForm</span></code></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bank.views.AccountLostCost.form_valid">
+<span class="sig-name descname"><span class="pre">form_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">form</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bank.views.AccountLostCost.form_valid" title="Ссылка на это определение"></a></dt>
+<dd><p>Снятие</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bank.views.AccountLostCost.get_form_kwargs">
+<span class="sig-name descname"><span class="pre">get_form_kwargs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bank.views.AccountLostCost.get_form_kwargs" title="Ссылка на это определение"></a></dt>
+<dd><p>Добавляем дополнительный аргумент user в словарь kwargs</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bank.views.AccountLostCost.success_url">
+<span class="sig-name descname"><span class="pre">success_url</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'user_page'</span></em><a class="headerlink" href="#bank.views.AccountLostCost.success_url" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bank.views.AccountLostCost.template_name">
+<span class="sig-name descname"><span class="pre">template_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bank/lost.html'</span></em><a class="headerlink" href="#bank.views.AccountLostCost.template_name" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="bank.views.AccountPage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bank.views.</span></span><span class="sig-name descname"><span class="pre">AccountPage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bank.views.AccountPage" title="Ссылка на это определение"></a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">CreateView</span></code></p>
+<p>Страница счетов(создание и отображение)</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bank.views.AccountPage.extra_context">
+<span class="sig-name descname"><span class="pre">extra_context</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'title':</span> <span class="pre">'Счета'}</span></em><a class="headerlink" href="#bank.views.AccountPage.extra_context" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bank.views.AccountPage.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#bank.views.AccountPage.fields" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bank.views.AccountPage.form_valid">
+<span class="sig-name descname"><span class="pre">form_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">form</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bank.views.AccountPage.form_valid" title="Ссылка на это определение"></a></dt>
+<dd><p>Генерация номера счёта</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bank.views.AccountPage.get_context_data">
+<span class="sig-name descname"><span class="pre">get_context_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bank.views.AccountPage.get_context_data" title="Ссылка на это определение"></a></dt>
+<dd><p>Отображение счетов пользователя</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bank.views.AccountPage.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#bank.views.AccountPage.model" title="Ссылка на это определение"></a></dt>
+<dd><p>alias of <a class="reference internal" href="#bank.models.BankAccount" title="bank.models.BankAccount"><code class="xref py py-class docutils literal notranslate"><span class="pre">BankAccount</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bank.views.AccountPage.success_url">
+<span class="sig-name descname"><span class="pre">success_url</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'accounts'</span></em><a class="headerlink" href="#bank.views.AccountPage.success_url" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bank.views.AccountPage.template_name">
+<span class="sig-name descname"><span class="pre">template_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bank/accounts.html'</span></em><a class="headerlink" href="#bank.views.AccountPage.template_name" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="bank.views.BlockUser">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bank.views.</span></span><span class="sig-name descname"><span class="pre">BlockUser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bank.views.BlockUser" title="Ссылка на это определение"></a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">View</span></code></p>
+<p>Страница блокировки аккаунта</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bank.views.BlockUser.extra_context">
+<span class="sig-name descname"><span class="pre">extra_context</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'title':</span> <span class="pre">'Главная</span> <span class="pre">страница'}</span></em><a class="headerlink" href="#bank.views.BlockUser.extra_context" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bank.views.BlockUser.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bank.views.BlockUser.get" title="Ссылка на это определение"></a></dt>
+<dd><p>Переопределеие гет запроса</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bank.views.BlockUser.post">
+<span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bank.views.BlockUser.post" title="Ссылка на это определение"></a></dt>
+<dd><p>Переопределеие пост запроса</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bank.views.BlockUser.success_url">
+<span class="sig-name descname"><span class="pre">success_url</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'logout'</span></em><a class="headerlink" href="#bank.views.BlockUser.success_url" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bank.views.BlockUser.template_name">
+<span class="sig-name descname"><span class="pre">template_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bank/user_page.html'</span></em><a class="headerlink" href="#bank.views.BlockUser.template_name" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="bank.views.LoginPage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bank.views.</span></span><span class="sig-name descname"><span class="pre">LoginPage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bank.views.LoginPage" title="Ссылка на это определение"></a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">LoginView</span></code></p>
+<p>Страница авторизации</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bank.views.LoginPage.extra_context">
+<span class="sig-name descname"><span class="pre">extra_context</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'title':</span> <span class="pre">'Авторизация'}</span></em><a class="headerlink" href="#bank.views.LoginPage.extra_context" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bank.views.LoginPage.form_class">
+<span class="sig-name descname"><span class="pre">form_class</span></span><a class="headerlink" href="#bank.views.LoginPage.form_class" title="Ссылка на это определение"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">LoginUserForm</span></code></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bank.views.LoginPage.form_invalid">
+<span class="sig-name descname"><span class="pre">form_invalid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">form</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bank.views.LoginPage.form_invalid" title="Ссылка на это определение"></a></dt>
+<dd><p>Вывод при неверном пароле</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bank.views.LoginPage.form_valid">
+<span class="sig-name descname"><span class="pre">form_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">form</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bank.views.LoginPage.form_valid" title="Ссылка на это определение"></a></dt>
+<dd><p>Проверка не заблокирован ли пользователь</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bank.views.LoginPage.get_success_url">
+<span class="sig-name descname"><span class="pre">get_success_url</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bank.views.LoginPage.get_success_url" title="Ссылка на это определение"></a></dt>
+<dd><p>Ссылка перехода</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bank.views.LoginPage.template_name">
+<span class="sig-name descname"><span class="pre">template_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bank/login.html'</span></em><a class="headerlink" href="#bank.views.LoginPage.template_name" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="bank.views.SingInPage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bank.views.</span></span><span class="sig-name descname"><span class="pre">SingInPage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bank.views.SingInPage" title="Ссылка на это определение"></a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">CreateView</span></code></p>
+<p>Страница регистрации</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bank.views.SingInPage.extra_context">
+<span class="sig-name descname"><span class="pre">extra_context</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'title':</span> <span class="pre">'Регистрация'}</span></em><a class="headerlink" href="#bank.views.SingInPage.extra_context" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bank.views.SingInPage.form_class">
+<span class="sig-name descname"><span class="pre">form_class</span></span><a class="headerlink" href="#bank.views.SingInPage.form_class" title="Ссылка на это определение"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">RegisterUserForm</span></code></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bank.views.SingInPage.form_valid">
+<span class="sig-name descname"><span class="pre">form_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">form</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bank.views.SingInPage.form_valid" title="Ссылка на это определение"></a></dt>
+<dd><p>Внос данных в бд</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bank.views.SingInPage.success_url">
+<span class="sig-name descname"><span class="pre">success_url</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'user_page'</span></em><a class="headerlink" href="#bank.views.SingInPage.success_url" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bank.views.SingInPage.template_name">
+<span class="sig-name descname"><span class="pre">template_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bank/sing_in.html'</span></em><a class="headerlink" href="#bank.views.SingInPage.template_name" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="bank.views.TransferPage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bank.views.</span></span><span class="sig-name descname"><span class="pre">TransferPage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bank.views.TransferPage" title="Ссылка на это определение"></a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">CreateView</span></code></p>
+<p>Страница переводов</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bank.views.TransferPage.extra_context">
+<span class="sig-name descname"><span class="pre">extra_context</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'title':</span> <span class="pre">'Переводы'}</span></em><a class="headerlink" href="#bank.views.TransferPage.extra_context" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bank.views.TransferPage.form_class">
+<span class="sig-name descname"><span class="pre">form_class</span></span><a class="headerlink" href="#bank.views.TransferPage.form_class" title="Ссылка на это определение"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">TransferForm</span></code></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bank.views.TransferPage.form_valid">
+<span class="sig-name descname"><span class="pre">form_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">form</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bank.views.TransferPage.form_valid" title="Ссылка на это определение"></a></dt>
+<dd><p>Проверка введённых данных</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bank.views.TransferPage.get_form_kwargs">
+<span class="sig-name descname"><span class="pre">get_form_kwargs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bank.views.TransferPage.get_form_kwargs" title="Ссылка на это определение"></a></dt>
+<dd><p>Добавляем дополнительный аргумент user в словарь kwargs</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bank.views.TransferPage.success_url">
+<span class="sig-name descname"><span class="pre">success_url</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'transfer'</span></em><a class="headerlink" href="#bank.views.TransferPage.success_url" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bank.views.TransferPage.template_name">
+<span class="sig-name descname"><span class="pre">template_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bank/transfer.html'</span></em><a class="headerlink" href="#bank.views.TransferPage.template_name" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="bank.views.TranslationHistoryPage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bank.views.</span></span><span class="sig-name descname"><span class="pre">TranslationHistoryPage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bank.views.TranslationHistoryPage" title="Ссылка на это определение"></a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">CreateView</span></code></p>
+<p>Страница истории переводов</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bank.views.TranslationHistoryPage.extra_context">
+<span class="sig-name descname"><span class="pre">extra_context</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'title':</span> <span class="pre">'История</span> <span class="pre">переводов'}</span></em><a class="headerlink" href="#bank.views.TranslationHistoryPage.extra_context" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bank.views.TranslationHistoryPage.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#bank.views.TranslationHistoryPage.fields" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bank.views.TranslationHistoryPage.get_context_data">
+<span class="sig-name descname"><span class="pre">get_context_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bank.views.TranslationHistoryPage.get_context_data" title="Ссылка на это определение"></a></dt>
+<dd><p>Отображение переводов</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bank.views.TranslationHistoryPage.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#bank.views.TranslationHistoryPage.model" title="Ссылка на это определение"></a></dt>
+<dd><p>alias of <a class="reference internal" href="#bank.models.Transfer" title="bank.models.Transfer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Transfer</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bank.views.TranslationHistoryPage.success_url">
+<span class="sig-name descname"><span class="pre">success_url</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'transfer'</span></em><a class="headerlink" href="#bank.views.TranslationHistoryPage.success_url" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bank.views.TranslationHistoryPage.template_name">
+<span class="sig-name descname"><span class="pre">template_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bank/translation_history.html'</span></em><a class="headerlink" href="#bank.views.TranslationHistoryPage.template_name" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bank.views.index">
+<span class="sig-prename descclassname"><span class="pre">bank.views.</span></span><span class="sig-name descname"><span class="pre">index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bank.views.index" title="Ссылка на это определение"></a></dt>
+<dd><p>Главная страница</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bank.views.logout_user">
+<span class="sig-prename descclassname"><span class="pre">bank.views.</span></span><span class="sig-name descname"><span class="pre">logout_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bank.views.logout_user" title="Ссылка на это определение"></a></dt>
+<dd><p>Выход из аккаунта</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bank.views.pageNotFound">
+<span class="sig-prename descclassname"><span class="pre">bank.views.</span></span><span class="sig-name descname"><span class="pre">pageNotFound</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exception</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bank.views.pageNotFound" title="Ссылка на это определение"></a></dt>
+<dd><p>Страница не найдена</p>
+</dd></dl>
+
+</section>
+<section id="module-bank">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-bank" title="Permalink to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
+        <a href="index.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="bank.migrations.html" class="btn btn-neutral float-right" title="bank.migrations package" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Chumachechy.</p>
+  </div>
+
+  Собрано при помощи <a href="https://www.sphinx-doc.org/">Sphinx</a> с использованием
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">темы,</a>
+    предоставленной <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
