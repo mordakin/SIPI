@@ -97,7 +97,7 @@ class TransferForm(forms.ModelForm):
 
 class AddedForm(forms.ModelForm):
     """Класс для формы пополнения и снятия"""
-    sender_name = forms.ChoiceField(label='Счёт с которого хотите отправить деньги',
+    sender_name = forms.ChoiceField(label='Счёт',
                                     widget=forms.Select(attrs={'class': 'form-control'}))
     cost = forms.IntegerField(label='Сумма',
                               widget=forms.NumberInput(attrs={'class': 'form-control'}))

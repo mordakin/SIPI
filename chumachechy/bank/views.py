@@ -184,7 +184,7 @@ class AccountAddCost(CreateView):
     form_class = AddedForm
     template_name = 'bank/add.html'
     extra_context = {'title': 'Пополнение'}
-    success_url = reverse_lazy('user_page')
+    success_url = reverse_lazy('add')
 
     def get_form_kwargs(self):
         """Добавляем дополнительный аргумент user в словарь kwargs """
@@ -203,7 +203,13 @@ class AccountAddCost(CreateView):
         else:
             BankAccount.objects.filter(account_number=sender_name).update(
                 amount_of_funds=F('amount_of_funds') + cost)
-            return super().form_invalid(form)
+            messages.success(self.request, "Пополнение прошло успешно")
+            # transfer = Transfer(sender_name=sender_name, recipient_name=sender_name, cost=cost)
+            # transfer.save()
+            form.instance.sender_name = sender_name
+            form.instance.recipient_name = sender_name
+            form.instance.cost = cost
+            return super().form_valid(form)
 
 
 class AccountLostCost(CreateView):
